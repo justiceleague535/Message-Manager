@@ -73,9 +73,9 @@ class OdometerData(ModuleData):
 
         reverse = set1 + set2 + set3 + set4
 
-        hex_converted = int(reverse, 16)
+        decimal = int(reverse, 16)
 
-        kilometers = 0.125 * hex_converted
+        kilometers = 0.125 * decimal
 
         miles = kilometers * self.conversion_constant
 
@@ -115,3 +115,32 @@ class FuelEconomyData(ModuleData):
             print(self.miles_per_gallon)
 
             return self.miles_per_gallon
+
+# Fuel Level 1 inherits from ModuleData
+class FuelLevelData(ModuleData):
+
+        # Constants for data conversion and processing
+        resolution = .4
+        conversion_constant = 1
+        percent = -1
+
+        def __init__(self, message_received):
+            ModuleData.__init__(self, message_received)
+
+        def calculate_element(self):
+            # Get the last index
+            indexLast = len(self.dataField) - 1
+
+            # Grab each data byte and reverse the order
+            set1 = self.dataField[indexLast - 19] + self.dataField[indexLast - 18]
+
+            reverse = set1
+
+            decimal = int(reverse, 16)
+
+            self.percent = decimal * self.conversion_constant * self.resolution
+
+            print('Fuel Level in %: ')
+            print(self.percent)
+
+            return self.percent
