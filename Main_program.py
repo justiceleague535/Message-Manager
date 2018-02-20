@@ -25,6 +25,8 @@ while now < end:
 
     message = bus.recv()
 
+#   message_send = bus.send()
+
     my_message = MessageManager.MessageTransceiver(message)
 
     my_message.listen_data()
