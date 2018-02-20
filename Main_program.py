@@ -39,13 +39,23 @@ while now < end:
         print('Vehicle Odometer Data Found')
         module = MessageManager.OdometerData(my_message)
 
+    if my_message.pgn_number == 1:
+        print('Total Engine Hours Data Found')
+        module = MessageManager.FuelLevelData(my_message)
+
+    if my_message.pgn_number == 2:
+        print('Total Fuel Used Data Found')
+        module = MessageManager.FuelLevelData(my_message)
+
     if my_message.pgn_number == 3:
         print('Fuel Economy Data Found')
         module = MessageManager.FuelEconomyData(my_message)
 
     if my_message.pgn_number == 4:
-        print('Fuel Level Data Found')
+        print('Fuel Level 1 Data Found')
         module = MessageManager.FuelLevelData(my_message)
+
+
 
     # print(module.dataField)
     print(module.calculate_element())
