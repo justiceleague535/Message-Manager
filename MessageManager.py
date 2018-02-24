@@ -9,7 +9,7 @@ class MessageTransceiver:
     unprocessedMessage = 'null'
     # flag to  check if it is a required message
     messageFlag = 0
-    pgn_number = 0
+    pgn_number = -1
 
     def __init__(self):
         print('Message object created.')
