@@ -1,10 +1,10 @@
 import MessageManager
-# import can
-# import os
-# import time
+import can
+import os
+import time
 
 start=time.time()
-runtime=10 #How long?
+runtime=3 #How long?
 end=start+runtime
 now=time.time()
 
@@ -27,38 +27,44 @@ while now < end:
 
 #   message_send = bus.send()
 
-    my_message = MessageManager.MessageTransceiver(message)
+    my_message = MessageManager.MessageTransceiver()
 
-    my_message.listen_data()
+    my_message.listen_data(message)
 
     my_message.check_message_type()
 
-    print(my_message.pgn_number)
+    #print(my_message.pgn_number)
 
     if my_message.pgn_number == 0:
         print('Vehicle Odometer Data Found')
         module = MessageManager.OdometerData(my_message)
+        print(module.calculate_element())
 
     if my_message.pgn_number == 1:
         print('Total Engine Hours Data Found')
         module = MessageManager.FuelLevelData(my_message)
+        print(module.calculate_element())
 
     if my_message.pgn_number == 2:
         print('Total Fuel Used Data Found')
         module = MessageManager.FuelLevelData(my_message)
+        print(module.calculate_element())
 
     if my_message.pgn_number == 3:
         print('Fuel Economy Data Found')
         module = MessageManager.FuelEconomyData(my_message)
+        print(module.calculate_element())
 
     if my_message.pgn_number == 4:
         print('Fuel Level 1 Data Found')
         module = MessageManager.FuelLevelData(my_message)
+        print(module.calculate_element())
+        
+        
 
 
-
-    # print(module.dataField)
-    print(module.calculate_element())
+    #print(module.dataField)
+    #print(module.calculate_element())
 
 
 

@@ -9,10 +9,11 @@ class MessageTransceiver:
     unprocessedMessage = 'null'
     # flag to  check if it is a required message
     messageFlag = 0
-    pgn_number = 0
+    pgn_number = -1
 
     def __init__(self):
-        print('Message object created.')
+        self.messageFlag = 0
+        #print('Message object created.')
         # message = bus.recv()
 
 
@@ -49,7 +50,7 @@ class ModuleData:
     # Constructor
     def __init__(self, message_received):
         self.message = message_received.unprocessedMessage
-        self.dataField = self.message[51:]
+        self.dataField = self.message[45:]
         self.parameterGroupNumber = message_received.pgn_number
 
 
@@ -83,13 +84,14 @@ class OdometerData(ModuleData):
 
         decimal = int(reverse, 16)
 
-        kilometers = 0.125 * decimal
+        kilometers = self.resolution * decimal
 
-        miles = kilometers * self.conversion_constant
+        self.total_miles = kilometers * self.conversion_constant
 
-        print('Odometer in Miles: ')
-        print(miles)
-        return miles
+        #print('Odometer in Miles: ')
+        print(self.pgnNames[self.parameterGroupNumber] + ' in Miles:')
+        #print(self.total_miles)
+        return self.total_miles
 
 
 # FuelEconomyData inherits from ModuleData
@@ -119,8 +121,9 @@ class FuelEconomyData(ModuleData):
 
             self.miles_per_gallon = decimal * self.conversion_constant * self.resolution
 
-            print('Fuel Economy in mpg: ')
-            print(self.miles_per_gallon)
+            #print('Fuel Economy in mpg: ')
+            print(self.pgnNames[self.parameterGroupNumber] + ' in mpg:')
+            #print(self.miles_per_gallon)
 
             return self.miles_per_gallon
 
@@ -148,8 +151,9 @@ class FuelLevel1Data(ModuleData):
 
             self.percent = decimal * self.conversion_constant * self.resolution
 
-            print('Fuel Level 1 in %: ')
-            print(self.percent)
+            #print('Fuel Level 1 in %: ')
+            print(self.pgnNames[self.parameterGroupNumber] + ' in %:')
+            #print(self.percent)
 
             return self.percent
 
@@ -184,8 +188,9 @@ class EngineHours(ModuleData):
 
             self.hours = decimal * self.conversion_constant * self.resolution
 
-            print('Total Engine Hours in Hours: ')
-            print(self.hours)
+            #print('Total Engine Hours in Hours: ')
+            print(self.pgnNames[self.parameterGroupNumber] + ' in Hours:')
+            #print(self.hours)
 
             return self.hours
 
@@ -219,7 +224,8 @@ class FuelUsed(ModuleData):
 
         self.gallons = decimal * self.conversion_constant * self.resolution
 
-        print('Total Fuel Used in Gallons: ')
-        print(self.gallons)
+        #print('Total Fuel Used in Gallons: ')
+        print(self.pgnNames[self.parameterGroupNumber] + ' in Gallons:')
+        #print(self.gallons)
 
         return self.gallons
