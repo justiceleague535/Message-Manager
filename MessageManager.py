@@ -99,7 +99,7 @@ class FuelEconomyData(ModuleData):
 
         # Constants for data conversion and processing
         resolution = (1/512)
-        conversion_constant = 0.62131192 * (1/0.2641762)
+        conversion_constant = 0.62131192 * (1/0.26417205236)
         miles_per_gallon = -1
 
         def __init__(self, message_received):
@@ -198,7 +198,7 @@ class EngineHours(ModuleData):
 class FuelUsed(ModuleData):
     # Constants for data conversion and processing
     resolution = 0.5
-    conversion_constant = 0.2641762
+    conversion_constant = 0.26417205236
     gallons = -1
 
 # Unsure if still needed I think it is but message_received will just have to have bus.send() info sent to it.
